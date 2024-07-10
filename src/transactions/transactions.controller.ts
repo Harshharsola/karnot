@@ -23,6 +23,17 @@ export class TransactionsController {
     res.send(response);
   }
 
+  @Get()
+  async getAllTrxns(
+    @Query('skip') skip: number,
+    @Query('limit') limit: number,
+    @Res() res,
+  ) {
+    const response = await this.transactionService.getAllTrxns(skip, limit);
+    res.send(response);
+    return;
+  }
+
   @Get('get-trxns-info')
   async getTrxnsInfo(@Query('hash') trxns: string, @Res() res) {
     const response = await this.transactionService.getTrxnsInfo(trxns);

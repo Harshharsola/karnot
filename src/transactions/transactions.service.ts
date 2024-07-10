@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { timeStamp } from 'console';
 import { Model } from 'mongoose';
 import { Transaction } from 'src/schemas/transaction.schema';
 import { StarknetService } from 'src/starknet/starknet.service';
@@ -85,6 +86,24 @@ export class TransactionsService implements OnModuleInit {
       console.log(writeResponse);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async getAllTrxns(skip: number, limit: number) {
+    try {
+      const response = await this.transactionModel
+        .find()
+        .sort({ timeStamp: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean();
+      return response;
+    } catch (error) {
+      throw new HttpException(
+        'Error fetching block number',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        { cause: error },
+      );
     }
   }
 
