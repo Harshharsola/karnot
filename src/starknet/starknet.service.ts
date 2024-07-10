@@ -20,7 +20,7 @@ export class StarknetService {
         id: 1,
       };
       const headers = { 'Content-Type': 'application/json' };
-      console.log(process.env.PROJECT_ID);
+
       const response = await axios.post(this.baseUrl, body, { headers });
 
       return response.data;
