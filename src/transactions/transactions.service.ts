@@ -29,4 +29,17 @@ export class TransactionsService {
       );
     }
   }
+
+  async getTrxnsInfo(trxnsHash: string) {
+    try {
+      const response = await this.starknetService.getInfoForTrxns(trxnsHash);
+      return response;
+    } catch (error) {
+      throw new HttpException(
+        'Error fetching block number',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        { cause: error },
+      );
+    }
+  }
 }

@@ -17,7 +17,7 @@ export class StarknetService {
         jsonrpc: '2.0',
         method: 'starknet_blockNumber',
         params: [],
-        id: 0,
+        id: 1,
       };
       const headers = { 'Content-Type': 'application/json' };
       console.log(process.env.PROJECT_ID);
@@ -43,7 +43,32 @@ export class StarknetService {
             block_number: blockNumber,
           },
         ],
-        id: 0,
+        id: 1,
+      };
+
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+
+      const response = await axios.post(this.baseUrl, body, { headers });
+
+      return response.data;
+    } catch (error) {
+      throw new HttpException(
+        'Error fetching block number',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        { cause: error },
+      );
+    }
+  };
+
+  getInfoForTrxns = async (trxnsHash: string) => {
+    try {
+      const body = {
+        jsonrpc: '2.0',
+        method: 'starknet_getTransactionReceipt',
+        params: [trxnsHash],
+        id: 1,
       };
 
       const headers = {

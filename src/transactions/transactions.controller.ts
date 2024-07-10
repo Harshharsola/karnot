@@ -22,4 +22,11 @@ export class TransactionsController {
 
     res.send(response);
   }
+
+  @Get('get-trxns-info')
+  async getTrxnsInfo(@Query('hash') trxns: string, @Res() res) {
+    const response = await this.transactionService.getTrxnsInfo(trxns);
+
+    res.send(response);
+  }
 }
